@@ -1,20 +1,9 @@
-name: 'Azure Container Registry Login'
-description: 'Log in to Azure Container Registry (ACR) or any private docker container registry'
-inputs: 
-  username:
-    description: 'Container registry username'
-    required: true
-    default: 'ictlinktestkokubun'
-  password:
-    description: 'Container registry password'
-    required: true
-    default: 'BMt7o3CiRFqd6RzVCdlg+3rbkAPfR7wRqepaGooXBU+ACRAx9obq'
-  login-server:
-    description: 'Container registry server url'
-    required: true
-    default: 'https://ictlinktestkokubun.azurecr.io/'
-branding:
-  color: 'green'
-runs:
-  using: 'node16'
-  main: 'lib/login.js'
+- uses: azure/docker-login@v1
+  with:
+    login-server: ictlinktestkokubun.azurecr.io
+    username: ${{ secrets.ictlinktestkokubun }}
+    password: ${{ secrets.BMt7o3CiRFqd6RzVCdlg+3rbkAPfR7wRqepaGooXBU+ACRAx9obq }}
+
+- run: |
+    docker build . -t ictlinktestkokubun.azurecr.io/k8sdemo:${{ github.sha }}
+    docker push ictlinktestkokubun.azurecr.io/k8sdemo:${{ github.sha }}
