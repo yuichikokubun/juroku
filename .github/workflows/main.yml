@@ -1,0 +1,9 @@
+- uses: azure/docker-login@v1
+  with:
+    login-server: ictlinktestkokubun.azurecr.io
+    username: ${{ secrets.ictlinktestkokubun }}
+    password: ${{ secrets.BMt7o3CiRFqd6RzVCdlg+3rbkAPfR7wRqepaGooXBU+ACRAx9obq }}
+
+- run: |
+    docker build . -t ictlinktestkokubun.azurecr.io/k8sdemo:${{ github.sha }}
+    docker push ictlinktestkokubun.azurecr.io/k8sdemo:${{ github.sha }}
